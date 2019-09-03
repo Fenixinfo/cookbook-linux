@@ -1,0 +1,2 @@
+# cookbook-linux
+MANUAIS E DICAS DE CONFIGURAÇÃO LINUX
