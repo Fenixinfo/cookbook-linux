@@ -1,0 +1,53 @@
+############ ROTEIRO E INTALAÇÃO GIT 
+VER=0.1
+POR=Paulo R. Bortolotto
+
+FLUXO
+	working dir (contem os arquivos)
+	index (area temporaria)
+	head (ultimo commit)
+
+Criar conta
+
+	https://github.com
+
+Instalação
+ 
+	sudo apt install git
+	
+configuração
+	
+	git config --global user.name "user"
+	git config --global user.email "user@mail"
+	ls -la 
+	 .gitconfig (criado)
+        git config --list (checa configuração do git)
+
+Cria novo repositorio
+
+	git init nomerepositorio
+
+Clonar repositorios
+	
+	git clone https://github.com/contagithub/repositoriocriado
+
+Comandos de produção
+	
+	git status (status do git)
+	git add * ou arquivo (adiciona ao index)
+	git commit -am "comentario" (adiciona ao head)
+	git push (envia para o repositorio remoto)
+	git pull (atualiza repositorio local)
+	git log --oneline (logs do git id)
+		--graph --all (graficos da ramificação)
+	git branch (verifica a ramificação)
+	git checkout "id" (retorna arquivo para versão anterior)
+		     master (retorna para a ultima modificação)	
+		     nomedoarquivo (retorna antes da mudança)
+		     -b "nome do ramo" (cria uma nova ramificação)	
+	git diff (verifica diferença entre mudanças)
+	git reset --hard "id" (remove commit)
+	git tag "0.1" "id" (criando rotulos" 
+	git marge "nome ramificação" (mescla ramificação)
+
+

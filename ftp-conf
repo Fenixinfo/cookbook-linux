@@ -1,0 +1,40 @@
+CONFIGURAÇÃO FTP VSFTPD (DEBIAN)
+	
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+		   github.com/fenixinfo/conf-linux
+
+sudo apt update				(atualiza pacotes)
+sudo apt install vsftpd vim		(instala pacotes)
+sudo systemctl status vsftpd	  	(verifica status) 
+sudo vim /etc/vsftpd.conf		(edita o arquivo)
+
+	anonymus_enable=NO 	(não permite logar anonimamente)
+	local_enable=YES   	(apenas usuarios locais podem acessar o ftp)
+	write_enable=YES 	(abilita upload e exclusão de arquivos)
+	chroot_local_user=YES 	(impede que o usuario saia do seu diretorio)
+	  | (exemplos)
+	  |--->	ex1. user_sub_token=$USER
+	  |	     local_root=/home/$USER/ftp
+	  |--->	ex2. allow_writeable_chroot=YES
+
+	pasv_min_port=30000 				(conexões portas pasivas acrecentar no firewall)
+	pasv_max_port=31000 				(conexões portas pasivas acrecentar no firewall)
+	rsa_cert_file=/etc/ssl/private/vsftpd.pem 	(usando certificado)
+	rsa_cert_key_file=/etc/ssl/private/vsftpd.pem 	(chave certificado)
+	ssl_enable=YES					(ativa certificado)
+	userlist_enable=YES 				(limita usuarios ao ftp *colocar final do arquivo)
+	userlist_file=/etc/vsftpd.user_list 		(indica a lista de usuarios permitidos no ftp)
+	userlist_deny=NO				(bloqueia os demias)
+
+sudo systemctl restart vsftpd				(restarta)
+sudo systemctl status vsftpd 				(verifica status) 
+sudo adduser --disable-login usuario 			(adiciona usuario desabilita login terminal)
+echo "user" | sudo tee -a /etc/vsftpd.user_list		(adiciona a lista de usuarios ftp)
+sudo mkdir -p /home/user/ftp/upload			(cria pasta ftp no diretorio do user)
+sudo chmod 550 /home/user/ftp				(permisão pasta ftp leitura e execução)
+sudo chmod 750 /home/user/ftp/upload			(permisão pasta upload completa)
+sudo chown -R user: /home/user/ftp			(ajusta proprietario do diretorio)
+
+	
+
