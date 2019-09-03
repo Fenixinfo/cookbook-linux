@@ -1,6 +1,8 @@
-############ ROTEIRO E INTALAÇÃO GIT 
-VER=0.1
-POR=Paulo R. Bortolotto
+INTALAÇÃO E USO DO GIT 
+
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+		   github.com/fenixinfo/cookbook-linux
 
 FLUXO
 	working dir (contem os arquivos)
