@@ -52,4 +52,9 @@ Comandos de produção
 	git tag "0.1" "id" (criando rotulos" 
 	git marge "nome ramificação" (mescla ramificação)
 
+*DICAS
+
+	git config --global credential.helper 'cache --timeout=28800'	(salva login e senha por 8hs)
+	git config --global credential.helper cache			(salva login e senha permanetemente)
+
 
