@@ -1,0 +1,18 @@
+INSTALAÇÃO -  CONFIGURAÇÃO - COMANDOS
+	
+	system:debian v10
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+
+sudo apt update			(atualiza repositorios)
+sudo apt install ansible	(instalao aplicação)
+
+ansible --version	(verifica versão)
+
+cd /etc/ansible/	(diretorio padrão ansible)
+ls
+	ansible.cfg
+        hosts
+sudo vim host	(adicionar hosts para controle)
+
+
