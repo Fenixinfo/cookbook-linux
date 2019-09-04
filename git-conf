@@ -58,3 +58,4 @@ Comandos de produção
 	git config --global credential.helper cache			(salva login e senha permanetemente)
 
 
+http://rogerdudler.github.io/git-guide/index.pt_BR.html
