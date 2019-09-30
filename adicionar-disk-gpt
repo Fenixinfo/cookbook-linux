@@ -1,0 +1,16 @@
+	ADICINAR DISCOS MAIORES DE 2TB EM FORMATO GPT
+
+(instala particionador) 		apt install parted
+(manual) 				man parted
+(verifica tamanho total do disk) 	fdisk -l /dev/sd*dispositivo
+(starta particinador na unidade)	parted /dev/sdb
+(escole modelo de partição) 		mklabel gpt
+						yes
+(escolhe unidade de tamanho)  		unit TB
+(cria a partição) 			mkpart primary 0.00TB *tamanhohd*TB
+(verifica a criação)			print
+(sai) 					quit
+(formata partição)			mkfs.ext4 /dev/sdb1
+(verifica partição)			fdisk -l /dev/sdb
+(UUID para mintagem na inicialização)	blkid
+
