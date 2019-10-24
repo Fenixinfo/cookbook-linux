@@ -5,6 +5,7 @@
 		   github.com/fenixinfo/conf-linux
 
 
+pacotes adicionais
 
-
+	#apt install curl vim 
 
