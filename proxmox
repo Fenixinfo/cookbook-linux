@@ -5,7 +5,42 @@
 		   github.com/fenixinfo/conf-linux
 
 
-pacotes adicionais
+#### ATUALIZAÇÃO INSTALAÇÃO E AJUSTES
+	rm -rf /etc/apt/sources.list.d/pve-enterprise.list
+	apt update && apt upgrade && apt clean
+	atualizar repositorios 
+		deb http://download.proxmox.com/debian/pve buster pve-no-subscription		
+	apt install curl vim  openvswitch-switch aptitude openssh-server net-tools rcconf iproute2 ntfs-3g tcpdump hdparm sshpass nfs-common nfs-kernel-server dnsutils postfix mutt gpgsm mailutils
 
-	#apt install curl vim 
+#### DICAS 
 
+PARA AMPLIAR O VOLUME DA PARTIÇÃO
+	lvresize --size +20G --resizefs /dev/xxxx/root 	
+
+REMOVE SUBSCRIÇÃO 
+	vim /usr/share/pve-manager/js/pvemanagerlib.js
+
+ADICIONA HDD
+	cfdisk ---- marcar partição livre ---- [new] ---- [type] (Linux Filesystem) ---- [write] ---- [quit]
+	mkdir /vms "ou outra"
+	fdisk -l "verifica a partição criada"
+	mkfs.xfs /dev/partição  -f
+	vim /etc/fstab
+		/dev/partic* /montagem xfs defaults 0  0 
+	mount -a
+	No Proxmox
+		Datacenter -- Storage -- Add -- directory 
+			id= nome
+			directory= local
+			contend= tipos de arquivos para gravar
+					Add
+
+
+CLUSTER
+	PRIMEIRO NO
+		pvecm create PVECLUSTER
+		pvecm status
+	DEMAIS NOS
+		pvecm add "nome ou ip do primeiro no"
+
+		
