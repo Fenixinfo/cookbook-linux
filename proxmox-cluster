@@ -1,0 +1,28 @@
+#### CONFIG PROXMOX 6.0 
+
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+		   github.com/fenixinfo/conf-linux
+
+
+#### ATUALIZAÇÃO INSTALAÇÃO E AJUSTES
+
+CLUSTER
+	PRIMEIRO NO
+		pvecm create PVECLUSTER
+		pvecm status
+	DEMAIS NOS
+		pvecm add "nome ou ip do primeiro no"
+	
+	PARA CLUSTER
+		systemctl stop pve-cluster
+		systemctl stop corosync		
+		pmxcfs -l 
+
+DISCOS
+	lsmod | grep zfs (verifica se modulo foi carregado)
+	zpool status 	(verifica status)
+	zfs list	(lista pool criado)
+	zpool create zfspool /dev/"disco" -f  (cria pool zfs, -f força.)
+
+		

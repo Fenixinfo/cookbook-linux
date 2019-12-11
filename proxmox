@@ -7,12 +7,17 @@
 
 #### ATUALIZAÇÃO INSTALAÇÃO E AJUSTES
 	rm -rf /etc/apt/sources.list.d/pve-enterprise.list
-	apt update && apt upgrade && apt clean
 	atualizar repositorios 
-		deb http://download.proxmox.com/debian/pve buster pve-no-subscription		
-	apt install curl vim  openvswitch-switch aptitude openssh-server net-tools rcconf iproute2 ntfs-3g tcpdump hdparm sshpass nfs-common nfs-kernel-server dnsutils postfix mutt gpgsm mailutils
+		vim /etc/apt/sources.list
+			deb http://download.proxmox.com/debian/pve buster pve-no-subscription		
+		apt update && apt upgrade && apt clean
+		pveam update (atualiza templetes)
+		apt install curl vim  openvswitch-switch aptitude openssh-server net-tools rcconf iproute2 ntfs-3g tcpdump hdparm sshpass nfs-common nfs-kernel-server dnsutils postfix mutt gpgsm mailutils
 
 #### DICAS 
+	
+	##COMANDOS
+	pvs (local e tamanho disco alocado para o proxmox)
 
 PARA AMPLIAR O VOLUME DA PARTIÇÃO
 	lvresize --size +20G --resizefs /dev/xxxx/root 	
@@ -42,5 +47,9 @@ CLUSTER
 		pvecm status
 	DEMAIS NOS
 		pvecm add "nome ou ip do primeiro no"
-
-		
+	
+	PARA CLUSTER
+		systemctl stop pve-cluster
+		systemctl stop corosync		
+		pmxcfs -l 
+	
