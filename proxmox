@@ -14,18 +14,15 @@
 		pveam update (atualiza templetes)
 		apt install curl vim  openvswitch-switch aptitude openssh-server net-tools rcconf iproute2 ntfs-3g tcpdump hdparm sshpass nfs-common nfs-kernel-server dnsutils postfix mutt gpgsm mailutils
 
-#### DICAS 
 	
 	##COMANDOS
 	pvs (local e tamanho disco alocado para o proxmox)
+	vgdisplay
 
-PARA AMPLIAR O VOLUME DA PARTIÇÃO
-	lvresize --size +20G --resizefs /dev/xxxx/root 	
 
-REMOVE SUBSCRIÇÃO 
-	vim /usr/share/pve-manager/js/pvemanagerlib.js
+#### ADICIONAR E MUDAR TAMANHO PARTIÇÃO 
 
-ADICIONA HDD
+	## ADICIONA HDD XFS
 	cfdisk ---- marcar partição livre ---- [new] ---- [type] (Linux Filesystem) ---- [write] ---- [quit]
 	mkdir /vms "ou outra"
 	fdisk -l "verifica a partição criada"
@@ -41,15 +38,16 @@ ADICIONA HDD
 					Add
 
 
-CLUSTER
-	PRIMEIRO NO
-		pvecm create PVECLUSTER
-		pvecm status
-	DEMAIS NOS
-		pvecm add "nome ou ip do primeiro no"
-	
-	PARA CLUSTER
-		systemctl stop pve-cluster
-		systemctl stop corosync		
-		pmxcfs -l 
-	
+	## PARA AMPLIAR O VOLUME DA PARTIÇÃO
+	lvresize --size +20G --resizefs /dev/xxxx/root 	
+
+#### REMOVER PROPAGANDA E BANER DE LOGIN DO SHELL
+
+REMOVE SUBSCRIÇÃO 
+	vim /usr/share/pve-manager/js/pvemanagerlib.js
+
+BANER SHELL
+	vim /etc/hosts
+	systemctl disable pvebanner
+	vim /etc/issue
+

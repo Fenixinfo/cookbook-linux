@@ -1,0 +1,20 @@
+#### CONFIG PROXMOX 6.0 
+
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+		   github.com/fenixinfo/conf-linux
+
+
+#### ATUALIZAÇÃO INSTALAÇÃO E AJUSTES
+
+	pveam update (atualiza repositorio docker)
+	pveam avaliable (visualiza imagens)
+	pveam available --section system (visualiza apenas imagens de sitemas)
+	pveam download local debian-8.0-standard_8.0-1_amd64.tar.gz (baixar a imagem)
+	pveam list local (lista imagens ja baixadas)
+	pveam remove local:nomedaimagem (remove imagem)
+
+	pct create 100 localdaimagem (cria)
+	pct start 100 (inicia)	
+	pct console 100 (acessa)
+	lxc-start -n ID -F -l DEBUG -o /tmp/lxc-ID.log (cria log de erro de inicialização)

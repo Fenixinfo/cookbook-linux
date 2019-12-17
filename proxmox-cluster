@@ -17,12 +17,50 @@ CLUSTER
 	PARA CLUSTER
 		systemctl stop pve-cluster
 		systemctl stop corosync		
-		pmxcfs -l 
+	
+	REMOVER NO DO CLUSTER
+		*desligar no que sera removido
+		pvecm delnode nome
+		rm /etc/pve/nodes/NOREMOVIDO
+		remover chaves publicas /etc/pve/priv/authorized_keys 
+		
+	SEPARA NO DO CLUSTER 
+		systemctl stop pve-cluster
+		systemctl stop corosync
+		pmxcfs -l (volta cluster ao armazenamento local)
+		rm /etc/pve/corosync.conf
+		rm /etc/corosync/*
+		rm /var/lib/corosync/*	 
+		killall pmxcfs
+		systemctl start pve-cluster
+	
+	RETORNAR O MESMO CLUSTER
+		pvecm updatecerts (limpa rastros certificados)
+		
 
 DISCOS
 	lsmod | grep zfs (verifica se modulo foi carregado)
 	zpool status 	(verifica status)
 	zfs list	(lista pool criado)
-	zpool create zfspool /dev/"disco" -f  (cria pool zfs, -f força.)
+	zpool create nomedopool /dev/"disco" -f -n (cria pool zfs, -f força -n verifica)
+	zpool create -f nomedopool /dev/"disco" -f ( -f força)
+	zpool create -n nomedopool /dev/"disco" (-n verifica erros antes te montar)
+	zpool create nomedopool mirror /dev/discos (cria espelho entre hds)
+	zpool add nomedopool /dev/disco (adiciona disco ao pool)
+	zpoll create -m /localde/montagem nomedopool (monta pool em local pre determinado)
+	zpool destroy "nome do pool"  (remove pool) -f (força)
 
-		
+	### IMPORTANDO DISCOS ZFS
+	zpool import
+	zpoll import -f nomedapool
+	zpoll import -f nomedapoll novonome (importar e renomear)
+	zfs mount nomedenomeado
+		*para remontar a imagem de disco importada na vm editar 
+		arquivo de conf da vm "ex: /etc/pve/nodes/pve-01/qemu-server/100.conf"
+		adicione o caminho do disco.
+
+#DICAS
+
+	pvecm expected 1 (muda quorum)
+	watch -n 1 nomedopool list  (verifica migração para disco zfs a cada 1segundo)
+	
