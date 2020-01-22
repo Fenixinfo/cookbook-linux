@@ -18,7 +18,16 @@
 	##COMANDOS
 	pvs (local e tamanho disco alocado para o proxmox)
 	vgdisplay
-
+	
+	qm monitor <vmid>      
+	qm start <vmid>         start vm
+	qm reboot <vmid>        reboot vm (shutdown, start)
+	qm shutdown <vmid>      gracefully stop vm (send poweroff)
+	qm stop <vmid>          kill vm (immediate stop)
+	qm reset <vmid>         reset vm (stop, start)
+	qm suspend <vmid>       suspend vm
+	qm resume <vmid>        resume vm
+	qm destroy <vmid>       destroy vm (delete all files)
 
 #### ADICIONAR E MUDAR TAMANHO PARTIÇÃO 
 
