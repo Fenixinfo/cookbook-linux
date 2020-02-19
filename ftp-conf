@@ -5,7 +5,7 @@ CONFIGURAÇÃO FTP VSFTPD (DEBIAN)
 		   github.com/fenixinfo/conf-linux
 
 sudo apt update				(atualiza pacotes)
-sudo apt install vsftpd vim		(instala pacotes)
+sudo apt install vsftpd vim curl net-tools iproute2 tcpdump sshpass dnsutils mailutils 	(instala pacotes)
 sudo systemctl status vsftpd	  	(verifica status) 
 sudo vim /etc/vsftpd.conf		(edita o arquivo)
 
@@ -29,7 +29,7 @@ sudo vim /etc/vsftpd.conf		(edita o arquivo)
 
 sudo systemctl restart vsftpd				(restarta)
 sudo systemctl status vsftpd 				(verifica status) 
-sudo adduser --disable-login usuario 			(adiciona usuario desabilita login terminal)
+sudo adduser --disabled-login usuario 			(adiciona usuario desabilita login terminal)
 echo "user" | sudo tee -a /etc/vsftpd.user_list		(adiciona a lista de usuarios ftp)
 sudo mkdir -p /home/user/ftp/upload			(cria pasta ftp no diretorio do user)
 sudo chmod 550 /home/user/ftp				(permisão pasta ftp leitura e execução)

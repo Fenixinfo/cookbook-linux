@@ -11,11 +11,11 @@ echo "INICIALIZANDO AJUSTES E ATUALIZAÇÃO PROXMOX"
 echo "INECIALIZANDO..."
 $T 
 echo "REMOVENDO SUBSCRIÇÃO (pve-enterprise.list)"
-#rm -rf /etc/apt/sources.list.d/pve-enterprise.list
+rm -rf /etc/apt/sources.list.d/pve-enterprise.list
 $T2
 echo "..........................ok"
 echo "ADICIONANDO REPOSITORIO"
-#echo deb http://download.proxmox.com/debian/pve buster pve-no-subscription >> /etc/apt/sources.list
+echo deb http://download.proxmox.com/debian/pve buster pve-no-subscription >> /etc/apt/sources.list
 $T2
 echo "..........................ok"
 echo "ATUALIZANDO DITETORIO E INSTALAÇÃO"
