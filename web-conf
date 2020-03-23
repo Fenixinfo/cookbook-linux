@@ -1,0 +1,133 @@
+CONFIGURAÇÃO WEB SERVER (DEBIAN)
+	
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+		   github.com/fenixinfo/conf-linux
+
+
+	apt update && apt upgrade && apt clean
+	
+### Apache2 ###
+	apt install apache2 apache2-utils vim
+	a2enmod rewrite
+	vim /etc/apache2/sites-enabled/000-default.conf
+	
+		<Directory /var/www/html/>
+    		Options Indexes FollowSymLinks
+    		AllowOverride All
+		</Directory>
+
+	systemctl restart apache2
+
+### MariaDB 10.3 ###	
+	apt install mariadb-server mariadb-client 
+	mariadb -u root;
+	UPDATE user SET password=PASSWORD('SENHA.db.ROOT') WHERE User='root';
+	FLUSH PRIVILEGES;
+	quit;
+
+### PHP 7.3 ###
+	apt install libapache2-mod-php php php-mysql php-cli php-pear php-gmp php-gd php-bcmath php-mbstring php-curl php-xml php-zip
+	systemctl restart apache2
+	php --version
+
+### phpMyAdmi ###
+	apt install wget
+	cd /tmp/
+	wget https://files.phpmyadmin.net/phpMyAdmin/5.0.1/phpMyAdmin-5.0.1-all-languages.tar.gz
+	tar -vxzf phpMyAdmin-5.0.1-all-languages.tar.gz -C /usr/share/
+	mv /usr/share/phpMyAdmin-5.0.1-all-languages /usr/share/phpmyadmin
+	vim /etc/apache2/conf-available/phpmyadmin.conf
+		
+		# phpMyAdmin default Apache configuration
+ 
+		Alias /phpmyadmin /usr/share/phpmyadmin
+ 
+		<Directory /usr/share/phpmyadmin>
+		 Options FollowSymLinks
+		 DirectoryIndex index.php
+ 
+		 <IfModule mod_php7.c>
+		 AddType application/x-httpd-php .php
+ 
+ 		 php_flag magic_quotes_gpc Off
+		 php_flag track_vars On
+		 php_flag register_globals Off
+		 php_value include_path .
+		 </IfModule>
+ 
+		</Directory>
+ 
+		# Authorize for setup
+		<Directory /usr/share/phpmyadmin/setup>
+		 <IfModule mod_authn_file.c>
+		 AuthType Basic
+		 AuthName "phpMyAdmin Setup"
+		 AuthUserFile /etc/phpmyadmin/htpasswd.setup
+		 </IfModule>
+		 Require valid-user
+		</Directory>
+ 
+		# Disallow web access to directories that don't need it
+		<Directory /usr/share/phpmyadmin/libraries>
+		 Order Deny,Allow
+		 Deny from All
+		</Directory>
+		<Directory /usr/share/phpmyadmin/setup/lib>
+		 Order Deny,Allow
+		 Deny from All
+		</Directory>
+
+	a2enconf phpmyadmin
+	systemctl restart apache2
+	systemctl status apache2
+
+	mariadb -p
+
+		CREATE DATABASE phpmyadmin;
+		CREATE USER 'pma'@'localhost' IDENTIFIED BY 'SUA_SENHA';
+		GRANT ALL PRIVILEGES ON phpmyadmin.* TO 'pma'@'localhost' IDENTIFIED BY 'SUA_SENHA' WITH GRANT OPTION;
+		FLUSH PRIVILEGES;
+		EXIT;
+
+	mariadb -u root -p phpmyadmin < /usr/share/phpmyadmin/sql/create_tables.sql
+
+		senha segura (blowfish secret) que deve ter 32 caracteres. Use o gerador https://senhasegura.remontti.com.br
+
+	cp /usr/share/phpmyadmin/config.sample.inc.php /usr/share/phpmyadmin/config.inc.php
+	vim /usr/share/phpmyadmin/config.inc.php
+
+		 $cfg['blowfish_secret'] = 'dkJhGx83XR3JjuFrDn8kPp9NtXnkLptl';
+		/* Adicione esta linha */
+		$cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';
+
+		/* User used to manipulate with storage */
+		$cfg['Servers'][$i]['controlhost'] = 'localhost';
+		$cfg['Servers'][$i]['controlport'] = '';
+		$cfg['Servers'][$i]['controluser'] = 'pma';
+		$cfg['Servers'][$i]['controlpass'] = 'SUA_SENHA';
+
+		/* Storage database and tables */
+		$cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
+		$cfg['Servers'][$i]['bookmarktable'] = 'pma__bookmark';
+		$cfg['Servers'][$i]['relation'] = 'pma__relation';
+		$cfg['Servers'][$i]['table_info'] = 'pma__table_info';
+		$cfg['Servers'][$i]['table_coords'] = 'pma__table_coords';
+		$cfg['Servers'][$i]['pdf_pages'] = 'pma__pdf_pages';
+		$cfg['Servers'][$i]['column_info'] = 'pma__column_info';
+		$cfg['Servers'][$i]['history'] = 'pma__history';
+		$cfg['Servers'][$i]['table_uiprefs'] = 'pma__table_uiprefs';
+		$cfg['Servers'][$i]['tracking'] = 'pma__tracking';
+		$cfg['Servers'][$i]['userconfig'] = 'pma__userconfig';
+		$cfg['Servers'][$i]['recent'] = 'pma__recent';
+		$cfg['Servers'][$i]['favorite'] = 'pma__favorite';
+		$cfg['Servers'][$i]['users'] = 'pma__users';
+		$cfg['Servers'][$i]['usergroups'] = 'pma__usergroups';
+		$cfg['Servers'][$i]['navigationhiding'] = 'pma__navigationhiding';
+		$cfg['Servers'][$i]['savedsearches'] = 'pma__savedsearches';
+		$cfg['Servers'][$i]['central_columns'] = 'pma__central_columns';
+		$cfg['Servers'][$i]['designer_settings'] = 'pma__designer_settings';
+		$cfg['Servers'][$i]['export_templates'] = 'pma__export_templates';
+
+	http://[SERVER_IP]/phpmyadmin/
+

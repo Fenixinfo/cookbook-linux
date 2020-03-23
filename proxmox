@@ -14,6 +14,7 @@
 		pveam update (atualiza templetes)
 		apt install curl vim  openvswitch-switch aptitude openssh-server net-tools rcconf iproute2 ntfs-3g tcpdump hdparm sshpass nfs-common nfs-kernel-server dnsutils postfix mutt gpgsm mailutils
 
+        dpkg-reconfigure tzdata (ajusta fuzo)
 	
 	##COMANDOS
 	pvs (local e tamanho disco alocado para o proxmox)
@@ -60,3 +61,5 @@ BANER SHELL
 	systemctl disable pvebanner
 	vim /etc/issue
 
+#GIT
+git clone https://github.com/Fenixinfo/cookbook-linux.git

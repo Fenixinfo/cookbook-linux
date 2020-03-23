@@ -4,37 +4,27 @@ CONFIGURAÇÃO FTP VSFTPD (DEBIAN)
 	maintainer:paulo_bortoloto@outlook.com
 		   github.com/fenixinfo/conf-linux
 
-sudo apt update				(atualiza pacotes)
-sudo apt install vsftpd vim curl net-tools iproute2 tcpdump sshpass dnsutils mailutils 	(instala pacotes)
-sudo systemctl status vsftpd	  	(verifica status) 
-sudo vim /etc/vsftpd.conf		(edita o arquivo)
+ apt update && apt upgrade -y && apt clean			
+ apt install -y vsftpd vim  
+ systemctl status vsftpd 
+ cp /etc/vsftpd.conf /etc/vsftpd.conf-bk
+ vim /etc/vsftpd.conf	
 
-	anonymus_enable=NO 	(não permite logar anonimamente)
-	local_enable=YES   	(apenas usuarios locais podem acessar o ftp)
-	write_enable=YES 	(abilita upload e exclusão de arquivos)
-	chroot_local_user=YES 	(impede que o usuario saia do seu diretorio)
-	  | (exemplos)
-	  |--->	ex1. user_sub_token=$USER
-	  |	     local_root=/home/$USER/ftp
-	  |--->	ex2. allow_writeable_chroot=YES
-
-	pasv_min_port=30000 				(conexões portas pasivas acrecentar no firewall)
-	pasv_max_port=31000 				(conexões portas pasivas acrecentar no firewall)
-	rsa_cert_file=/etc/ssl/private/vsftpd.pem 	(usando certificado)
-	rsa_cert_key_file=/etc/ssl/private/vsftpd.pem 	(chave certificado)
-	ssl_enable=YES					(ativa certificado)
-	userlist_enable=YES 				(limita usuarios ao ftp *colocar final do arquivo)
-	userlist_file=/etc/vsftpd.user_list 		(indica a lista de usuarios permitidos no ftp)
-	userlist_deny=NO				(bloqueia os demias)
+portas FIREWALL
+ 20 21 990 40000:50000
 
 sudo systemctl restart vsftpd				(restarta)
 sudo systemctl status vsftpd 				(verifica status) 
-sudo adduser --disabled-login usuario 			(adiciona usuario desabilita login terminal)
-echo "user" | sudo tee -a /etc/vsftpd.user_list		(adiciona a lista de usuarios ftp)
-sudo mkdir -p /home/user/ftp/upload			(cria pasta ftp no diretorio do user)
-sudo chmod 550 /home/user/ftp				(permisão pasta ftp leitura e execução)
-sudo chmod 750 /home/user/ftp/upload			(permisão pasta upload completa)
-sudo chown -R user: /home/user/ftp			(ajusta proprietario do diretorio)
+cd /etc/skel
+mkdir Documentos Scanner 
+echo /bin/false >> /etc/shells 
+adduser user -shell /bin/false -home /dados/docs/user
+usermod -a -G usuariosftp user
+echo /bin/false >> /etc/shells
+chmod 555 -R /dados/docs
+chmod 770 /dados/docs/$user/*	
+sudo chown root: /dados/docs/*		
+sudo chown -R $user: /dados/docs/$user			
 
 
 ###### ARQUIVO VSFTPD.CONF EDITADO ######
@@ -63,5 +53,23 @@ sudo chown -R user: /home/user/ftp			(ajusta proprietario do diretorio)
 	userlist_deny=NO
 
 ##########################################
+
+	anonymus_enable=NO 	(não permite logar anonimamente)
+	local_enable=YES   	(apenas usuarios locais podem acessar o ftp)
+	write_enable=YES 	(abilita upload e exclusão de arquivos)
+	chroot_local_user=YES 	(impede que o usuario saia do seu diretorio)
+	  | (exemplos)
+	  |--->	ex1. user_sub_token=$USER
+	  |	     local_root=/home/$USER/ftp
+	  |--->	ex2. allow_writeable_chroot=YES
+
+	pasv_min_port=40000 				(conexões portas pasivas acrecentar no firewall)
+	pasv_max_port=50000 				(conexões portas pasivas acrecentar no firewall)
+	rsa_cert_file=/etc/ssl/private/vsftpd.pem 	(usando certificado)
+	rsa_cert_key_file=/etc/ssl/private/vsftpd.pem 	(chave certificado)
+	ssl_enable=YES					(ativa certificado)
+	userlist_enable=YES 				(limita usuarios ao ftp *colocar final do arquivo)
+	userlist_file=/etc/vsftpd.user_list 		(indica a lista de usuarios permitidos no ftp)
+	userlist_deny=NO				(bloqueia os demias)
 
 
