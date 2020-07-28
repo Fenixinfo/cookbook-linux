@@ -17,6 +17,8 @@
         dpkg-reconfigure tzdata (ajusta fuzo)
 	
 	##COMANDOS
+	pveum useradd user -comment "comentario" (cria usuario no proxmox)
+
 	pvs (local e tamanho disco alocado para o proxmox)
 	vgdisplay
 	
@@ -61,5 +63,11 @@ BANER SHELL
 	systemctl disable pvebanner
 	vim /etc/issue
 
+LOGO e TEXTOX
+	mv /root/proxmox_logo.png /usr/share/pve-manager/images
+	chmod 644 proxmox_logo.png
+	vim /usr/share/pve-manager/js/pvemanagerlib.js
+
+	
 #GIT
 git clone https://github.com/Fenixinfo/cookbook-linux.git

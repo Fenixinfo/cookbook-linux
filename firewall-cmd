@@ -1,0 +1,22 @@
+#### OMANDOS FIREWALL CENTOS E REH HET
+
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+		   github.com/fenixinfo/conf-linux
+
+
+# ADICIONA PORTAS
+firewall-cmd --zone=public --query-port=80/tcp --permanent
+
+# RECAREGA FIREWALL
+firewall-cmd --reload
+
+# VERIFICA PORTA ABERTA
+firewall-cmd --zone=public --query-port=80/tcp
+   \\ OU firewall-cmd --permanent --zone=public --add-service=http
+
+# VERIFICA REGRAS
+firewall-cmd --list-all 
+
+# REMOVE PORTAS
+firewall-cmd --zone=public --remove-port=80/tcp 

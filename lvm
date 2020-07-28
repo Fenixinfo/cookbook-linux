@@ -1,0 +1,42 @@
+##### CONFIG PARTIÇÕES LVM 
+
+	version:"1.0"
+	maintainer:paulo_bortoloto@outlook.com
+		   github.com/fenixinfo/lvm
+
+
+#COMANDOS
+vgs #ver grupos
+lvs #ver volumes
+fdisk -l #ver partições
+cfdisk # criar partições type LINUX LVM
+partprobe #no red hat e centOS
+pvcreate /dev/sda* #cria volome phisical
+lvextend -L +10G /dev/mapper/'grupo'-'vol'
+lvscan #verifica espaço adicionado
+
+vgdisplay -v
+vgdisplay | grep "Free" #ver espaço disponivel
+
+
+vgextend 'grupo' /dev/sda* #adiciona novo volume ao grupo
+vgreduce 'grupo' /dev/sda* #remove volume do grupo
+pvremove /dev/sda* #remove informações do volume
+vgcreate 'nomedogrupo' /dev/sda* #cria grupo
+lvcreate -T -l 100%FREE -n 'nomevolume' 'grupo' #cria volume logico
+lvdisplay 'grupo'/'nomevolume' #verifica processo
+mkfs.xfs /dev/mapper/'grupo'-'nomelv' -f #formatar disco novo antes de montar
+vim /etc/fstab
+	/dev/mapper/'grupo'-'nomelv' /montar xfs defaults 0 0 
+
+xfs_growfs /dev/mapper/centos-root -D 'nomeromaximo' #reorganiza partição
+
+#### REMOVER
+vgdisplay -v
+desmontar unidade
+lvremove /dev/'grupo'/'volume' 
+lgremove 'grupo'
+pvremove /dev/'disc'
+
+
+#
