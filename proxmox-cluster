@@ -63,4 +63,20 @@ DISCOS
 
 	pvecm expected 1 (muda quorum)
 	watch -n 1 nomedopool list  (verifica migração para disco zfs a cada 1segundo)
+
+#MUDA PORTA PROXMOX
+	CRIAR ARQUIVO rc.local no /etc/
+	
+		#!/bin/sh -e
+		#rc.local
+
+		sleep 5
+
+		iptables -A FORWARD -p tcp --dport 8007 -j ACCEPT
+		iptables -t nat -A PREROUTING -p tcp --dport 8007 -j DNAT --to 192.168.0.120:8006
+
+		exit 0
+
+	TORNAR EXECUTAVEL	
+		chmod +x rc.local
 	

@@ -1,0 +1,21 @@
+# RECEITA
+ https://github.com/takala-jp/zabbix-proxmox
+
+# NO PROXMOX
+	pveum useradd zabbix@pve -comment "Zabbix monitoring user"
+	pveum passwd zabbix@pve
+	pveum aclmod / -user zabbix@pve -role PVEAuditor
+
+# NO ZABBIX
+
+	criar pasta e colar script dentro
+	mkdir -p root/zabbix-proxmox/scripts/
+		clone https://github.com/takala-jp/zabbix-proxmox/blob/master/scripts/proxmox_cluster.py
+	
+	vim /etc/crontab
+	
+	0 */4   * * *   root /root/zabbix-proxmox/scripts/proxmox_cluster.py -a 10.1.1.251 -u zabbix@pve -p F3n1x -t PROXMOX-FENIX 
+	*/10 *  * * *   root /root/zabbix-proxmox/scripts/proxmox_cluster.py -a 10.1.1.251 -u zabbix@pve -p F3n1x -t PROXMOX-FENIX 
+
+	Testar
+	/usr/bin/zabbix_sender -v -c /etc/zabbix/zabbix_agentd.conf -s proxmox.tokyo.prod -k promox.cluster.quorate -o 1
