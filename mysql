@@ -1,0 +1,29 @@
+# acessar mysql
+
+	mysql -u root -p
+
+# ver tamanho das tabelas
+
+	SELECT table_schema "Data Base Name", 
+	sum( data_length + index_length ) / 1024 / 
+	1024 "Data Base Size in MB", 
+	sum( data_free )/ 1024 / 1024 "Free Space in MB" 
+	FROM information_schema.TABLES 
+	GROUP BY table_schema ;
+
+# exportar tabelas
+
+	#todas as tabelas
+	mysqldump -u root -p --all-databases > /home/bancosdedados.db
+	
+	#tabelas especifica
+	mysqldump -u root -p nomedobanco > /home/nomedobanco.db
+
+# importar tabalas
+
+	#todas as tabelas
+	source /home/bancosdedados.db
+	
+	#tabela especifica
+	surce /home/nomedobanco.db
+	mysql -u root -p banco_criado < backup.sql

@@ -6,7 +6,15 @@
 
 
 #### ATUALIZAÇÃO INSTALAÇÃO E AJUSTES
-	rm -rf /etc/apt/sources.list.d/pve-enterprise.list
+	df -h
+	vgs
+	lvextend /dev/pve/root -l 100%FREE
+	xfs_growfs /
+		vim /root/.bashrc
+	
+
+
+rm -rf /etc/apt/sources.list.d/pve-enterprise.list
 	atualizar repositorios 
 		vim /etc/apt/sources.list
 			deb http://download.proxmox.com/debian/pve buster pve-no-subscription		
@@ -68,6 +76,10 @@ LOGO e TEXTOX
 	chmod 644 proxmox_logo.png
 	vim /usr/share/pve-manager/js/pvemanagerlib.js
 
+#IMPORTAR DISCO PARA VM
 	
+	qemu-img convert winserver-flat.vmdk disk01.raw	
+	qm importdisk ID-DA-VM disk01.raw DESTINO_DISCO(ex: zfs-01)
+
 #GIT
 git clone https://github.com/Fenixinfo/cookbook-linux.git
